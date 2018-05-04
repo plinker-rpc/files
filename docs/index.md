@@ -45,7 +45,7 @@ List files and folders.
 
 | Parameter   | Type           | Description   | Default        |
 | ----------  | -------------  | ------------- |  ------------- | 
-| dir         | string         | Base paste to list files and folders from | `./` |
+| dir         | string         | Base path to list files and folders from | `./` |
 | extended    | bool           | Return extended fileinfo | `false` |
 | depth       | int            | Iterator depth | `10` |
 
