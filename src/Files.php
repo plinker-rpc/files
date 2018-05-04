@@ -21,10 +21,8 @@ namespace Plinker\Files {
         /**
          *
          */
-        public function files(array $params = array())
+        public function list($dir = '')
         {
-            $dir = $params[0];
-            
             if (!file_exists($dir) || !is_dir($dir) || !is_readable($dir)) {
                 return 'Folder does not exist or is not readable.';
             }
