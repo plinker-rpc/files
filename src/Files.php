@@ -4,7 +4,7 @@ namespace Plinker\Files {
     /**
      * Files Manager Class
      */
-    class Manager
+    class Files
     {
         public $config = array();
 

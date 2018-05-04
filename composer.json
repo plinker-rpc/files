@@ -1,6 +1,6 @@
 {
     "name": "plinker/files",
-    "description": "",
+    "description": "A files component which allows you to read and write files",
     "license": "MIT",
     "keywords": [],
     "homepage": "https://github.com/plinker-rpc",
