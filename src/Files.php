@@ -25,7 +25,11 @@ namespace Plinker\Files {
          * @param bool   $extended Return extended fileinfo
          * @param int    $depth    Iterator depth
          */
+<<<<<<< HEAD
         public function list($dir = './', $extended = false, $depth = 10)
+=======
+        public function list($dir = '')
+>>>>>>> e58325cb80cae24c67de419fed40e3cca2bd2a36
         {
             if (!file_exists($dir) || !is_dir($dir) || !is_readable($dir)) {
                 return 'Folder does not exist or is not readable.';
