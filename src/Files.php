@@ -19,12 +19,14 @@ namespace Plinker\Files {
         }
         
         /**
+         * List files
          *
+         * @param string $dir      Base paste to list files and folders from
+         * @param bool   $extended Return extended fileinfo
+         * @param int    $depth    Iterator depth
          */
-        public function files(array $params = array())
+        public function list($dir = './', $extended = false, $depth = 10)
         {
-            $dir = $params[0];
-            
             if (!file_exists($dir) || !is_dir($dir) || !is_readable($dir)) {
                 return 'Folder does not exist or is not readable.';
             }
@@ -42,66 +44,78 @@ namespace Plinker\Files {
             );
 
             // Maximum depth is 1 level deeper than the base folder
-            $it->setMaxDepth(100);
+            $it->setMaxDepth($depth);
 
             // Basic loop displaying different messages based on file or folder
+            $i = 0;
             foreach ($it as $fileinfo) {
                 $curDir = (empty($it->getSubPath()) ? '' : $it->getSubPath());
-
-                if ($fileinfo->isDir()) {
-                    $return['/'.str_replace(['//', '/.'], ['/', '.'], $curDir)][] = array(
-                        "name" => $fileinfo->getFilename(),
-                        "type" => "folder",
-                    );
-                    //$return[str_replace(['//', '/.'], ['/', '.'], $curDir.'/'.$fileinfo->getFilename())] = array();
-                } elseif ($fileinfo->isFile()) {
-                    $return['/'.str_replace(['//', '/.'], ['/', '.'], $curDir)][] = array(
-                        "name" => $fileinfo->getFilename(),
-                        "type" => "file",
-                    );
+                $key = '/'.str_replace(['//', '/.'], ['/', '.'], $curDir);
+                
+                // basic
+                $return[$key][$i] = array(
+                    "name" => $fileinfo->getFilename(),
+                    "type" => ($fileinfo->isDir() ? "folder" : "file"),
+                    "size" => $fileinfo->getSize()
+                );
+                
+                // extended
+                if ($extended) {
+                    $return[$key][$i]["info"] = [
+                        "last_access" => $fileinfo->getATime(),
+                        "change_time" => $fileinfo->getCTime(),
+                        "modified_time" => $fileinfo->getMTime(),
+                        "basename" => $fileinfo->getBasename(),
+                        "extension" => $fileinfo->getExtension(),
+                        "filename" => $fileinfo->getFilename(),
+                        "group" => $fileinfo->getGroup(),
+                        "owner" => $fileinfo->getOwner(),
+                        "inode" => $fileinfo->getInode(),
+                        "path" => $fileinfo->getPath(),
+                        "pathname" => $fileinfo->getPathname(),
+                        "size" => $fileinfo->getSize(),
+                        "type" => $fileinfo->getType(),
+                        "isDir" => $fileinfo->isDir(),
+                        "isExecutable" => $fileinfo->isExecutable(),
+                        "isFile" => $fileinfo->isFile(),
+                        "isLink" => $fileinfo->isLink(),
+                        "readable" => $fileinfo->isReadable(),
+                        "writable" => $fileinfo->isWritable()
+                    ];
                 }
+                
+                $i++;
             }
 
             return $return;
         }
-
+        
         /**
          *
          */
-        public function getFile(array $params = array())
+        public function createFile($path = '', $contents = '')
         {
-            if (file_exists($params[0])) {
-                return base64_encode(file_get_contents($params[0]));
-            } else {
-                // create file
-                file_put_contents($params[0], '');
-                return base64_encode(file_get_contents($params[0]));
-            }
+            return file_put_contents($path, $contents);
         }
 
         /**
          *
          */
-        public function deleteFile(array $params = array())
+        public function getFile($path = '')
         {
-            if (file_exists($params[0])) {
-                unlink($params[0]);
-                return base64_encode(true);
-            } else {
-                return base64_encode(true);
+            if (file_exists($path)) {
+                return file_get_contents($path);
             }
+            return false;
         }
 
         /**
          *
          */
-        public function saveFile(array $params = array())
+        public function deleteFile($path = '')
         {
-            if (file_exists($params[0]) || is_writable(dirname($params[0]))) {
-                file_put_contents($params[0], base64_decode(@$params[1]));
-                return base64_encode(true);
-            } else {
-                return base64_encode(true);
+            if (file_exists($path)) {
+                unlink($path);
             }
         }
     }
