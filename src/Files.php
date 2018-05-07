@@ -28,22 +28,16 @@ namespace Plinker\Files {
         public function list($dir = './', $extended = false, $depth = 10)
         {
             if (!file_exists($dir) || !is_dir($dir) || !is_readable($dir)) {
-                return 'Folder does not exist or is not readable.';
+                throw new \Exception('Folder does not exist or is not readable.');
             }
 
-            // Create recursive dir iterator which skips dot folders
-            $dir = new \RecursiveDirectoryIterator(
-                $dir,
-                \FilesystemIterator::SKIP_DOTS
-            );
-
-            // Flatten the recursive iterator, folders come before their files
+            // recursive iterator
             $it  = new \RecursiveIteratorIterator(
-                $dir,
-                \RecursiveIteratorIterator::SELF_FIRST
+                new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS),
+                \RecursiveIteratorIterator::CHILD_FIRST
             );
 
-            // Maximum depth is 1 level deeper than the base folder
+            // maximum depth
             $it->setMaxDepth($depth);
 
             // Basic loop displaying different messages based on file or folder
