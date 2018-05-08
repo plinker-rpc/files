@@ -158,6 +158,7 @@ Array
 
 Create/Put a file, if file already exists, it will be overwritten.
 
+
 | Parameter    | Description | Default |
 | ----------   | ------------- |  ------------- | 
 | path | File path |  |
@@ -177,6 +178,9 @@ number of bytes written to file
 ### Get File
 
 Get a file.
+
+!!! warning "Be aware"
+    Not suitable for transferring large files.
 
 | Parameter    | Description | Default |
 | ----------   | ------------- |  ------------- | 
