@@ -160,8 +160,8 @@ Create/Put a file, if file already exists, it will be overwritten.
 
 | Parameter    | Description | Default |
 | ----------   | ------------- |  ------------- | 
-| path | File path | `` |
-| contents | Contents of the file | `` |
+| path | File path |  |
+| contents | Contents of the file |  |
 | flags | File operations flags | `0` |
 
 **Call**
@@ -180,7 +180,7 @@ Get a file.
 
 | Parameter    | Description | Default |
 | ----------   | ------------- |  ------------- | 
-| path | File path | `` |
+| path | File path |  |
 
 **Call**
 ``` php
@@ -198,7 +198,7 @@ Delete a file.
 
 | Parameter    | Description | Default |
 | ----------   | ------------- |  ------------- | 
-| path | File path | `` |
+| path | File path |  |
 
 **Call**
 ``` php
