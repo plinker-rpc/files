@@ -21,7 +21,7 @@ namespace Plinker\Files {
         /**
          * List files
          *
-         * @param string $dir      Base paste to list files and folders from
+         * @param string $dir      Base path to list files and folders from
          * @param bool   $extended Return extended fileinfo
          * @param int    $depth    Iterator depth
          */
@@ -85,17 +85,25 @@ namespace Plinker\Files {
         }
         
         /**
+         * Put file
          *
+         * @param string  $path     File path
+         * @param string  $contents Contents of the file
+         * @param int     $flags    File operations flags
+         * @return int
          */
-        public function createFile($path = '', $contents = '')
+        public function put($path = '', $contents = '', $flags = 0)
         {
-            return file_put_contents($path, $contents);
+            return file_put_contents($path, $contents, $flags);
         }
-
+        
         /**
+         * Get file
          *
+         * @param string  $path     File path
+         * @return bool|mixed
          */
-        public function getFile($path = '')
+        public function get($path = '')
         {
             if (file_exists($path)) {
                 return file_get_contents($path);
@@ -104,9 +112,12 @@ namespace Plinker\Files {
         }
 
         /**
+         * Delete file
          *
+         * @param string  $path     File path
+         * @return null
          */
-        public function deleteFile($path = '')
+        public function delete($path = '')
         {
             if (file_exists($path)) {
                 unlink($path);
